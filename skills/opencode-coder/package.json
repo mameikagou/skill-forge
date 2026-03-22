@@ -1,0 +1,12 @@
+{
+  "name": "@skill-forge/opencode-coder",
+  "version": "2.1.0",
+  "private": true,
+  "scripts": {
+    "test": "bun test",
+    "install:skill": "bun scripts/install.ts"
+  },
+  "dependencies": {
+    "@skill-forge/shared": "workspace:*"
+  }
+}

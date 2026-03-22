@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * install.ts — cheap-hands 自动安装脚本
+ * install.ts — opencode-coder 自动安装脚本
  *
  * 做两件事：
  *   1. 将 opencode-agent/coder.md 复制到 ~/.config/opencode/agents/coder.md
@@ -113,7 +113,7 @@ function registerCoderAgent(): void {
   }
 
   agents.coder = {
-    description: "Code-only output agent — called by cheap-hands runner.ts",
+    description: "Code-only output agent — called by opencode-coder runner.ts",
   };
 
   try {
@@ -128,8 +128,8 @@ function registerCoderAgent(): void {
 // Main
 // ============================================================================
 
-console.log("cheap-hands installer");
-console.log("=====================");
+console.log("opencode-coder installer");
+console.log("========================");
 
 installCoderAgent();
 registerCoderAgent();
@@ -137,4 +137,4 @@ registerCoderAgent();
 console.log("\n--- Done! ---\n");
 log("The 'coder' agent is now available in OpenCode.");
 log("You can verify with: opencode agent list");
-log("cheap-hands skill will work automatically in Claude Code.\n");
+log("opencode-coder skill will work automatically in Claude Code.\n");

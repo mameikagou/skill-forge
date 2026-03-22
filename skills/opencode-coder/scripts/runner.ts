@@ -20,6 +20,7 @@
  *   → 清洗输出 → XML 解析 → 验证 → 备份+覆盖 → 生成 diff → 输出报告
  */
 
+import { log, fatal } from "@skill-forge/shared";
 import { cleanModelOutput } from "./cleaner";
 import { extractFileBlocks, validateFileBlocks, fallbackSingleFile } from "./xml-parser";
 import { buildPrompt, type FileInput } from "./prompt-builder";
@@ -50,17 +51,6 @@ const MAX_DIFF_LINES_PER_FILE = 50;
 // ============================================================================
 // 辅助函数
 // ============================================================================
-
-/** 向 stderr 输出状态信息（不进 stdout，不干扰 Claude 的 diff 解析） */
-function log(msg: string): void {
-  process.stderr.write(`>>> ${msg}\n`);
-}
-
-/** 致命错误：输出错误信息到 stderr 并退出 */
-function fatal(msg: string, exitCode: number): never {
-  process.stderr.write(`ERROR: ${msg}\n`);
-  process.exit(exitCode);
-}
 
 /**
  * 生成两个文件内容之间的 unified diff。

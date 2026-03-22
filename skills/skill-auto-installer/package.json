@@ -1,0 +1,9 @@
+{
+  "name": "@skill-forge/skill-auto-installer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "bun test",
+    "install:skill": "bun scripts/install.ts"
+  }
+}

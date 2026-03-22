@@ -1,0 +1,43 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "skill-forge",
+    },
+    "packages/shared": {
+      "name": "@skill-forge/shared",
+      "version": "0.1.0",
+    },
+    "skills/code-graph": {
+      "name": "@skill-forge/code-graph",
+      "version": "0.1.0",
+    },
+    "skills/opencode-coder": {
+      "name": "@skill-forge/opencode-coder",
+      "version": "2.1.0",
+      "dependencies": {
+        "@skill-forge/shared": "workspace:*",
+      },
+    },
+    "skills/skill-auto-installer": {
+      "name": "@skill-forge/skill-auto-installer",
+      "version": "0.1.0",
+    },
+    "skills/write-skill": {
+      "name": "@skill-forge/write-skill",
+      "version": "0.1.0",
+    },
+  },
+  "packages": {
+    "@skill-forge/code-graph": ["@skill-forge/code-graph@workspace:skills/code-graph"],
+
+    "@skill-forge/opencode-coder": ["@skill-forge/opencode-coder@workspace:skills/opencode-coder"],
+
+    "@skill-forge/shared": ["@skill-forge/shared@workspace:packages/shared"],
+
+    "@skill-forge/skill-auto-installer": ["@skill-forge/skill-auto-installer@workspace:skills/skill-auto-installer"],
+
+    "@skill-forge/write-skill": ["@skill-forge/write-skill@workspace:skills/write-skill"],
+  }
+}
