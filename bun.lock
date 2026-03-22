@@ -17,7 +17,7 @@
       "version": "0.1.0",
     },
     "skills/opencode-coder": {
-      "name": "@mameikagou/opencode-coder",
+      "name": "@skill-forge/opencode-coder",
       "version": "2.1.0",
       "bin": {
         "init-skill": "dist/init-skill.js",
@@ -36,9 +36,9 @@
     },
   },
   "packages": {
-    "@mameikagou/opencode-coder": ["@mameikagou/opencode-coder@workspace:skills/opencode-coder"],
-
     "@skill-forge/code-graph": ["@skill-forge/code-graph@workspace:skills/code-graph"],
+
+    "@skill-forge/opencode-coder": ["@skill-forge/opencode-coder@workspace:skills/opencode-coder"],
 
     "@skill-forge/shared": ["@skill-forge/shared@workspace:packages/shared"],
 
