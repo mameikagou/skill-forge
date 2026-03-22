@@ -12,19 +12,19 @@ echo "Installing opencode-coder..."
 # Create directory structure
 mkdir -p "$SKILL_DIR"
 mkdir -p "$SKILL_DIR/references"
-mkdir -p "$SKILL_DIR/opencode-agent"
 mkdir -p "$SKILL_DIR/scripts"
+mkdir -p "$SKILL_DIR/opencode-agent"
 
 # Download files
 curl -fsSL "$REPO_BASE/references/model-guide.md" -o "$SKILL_DIR/references/model-guide.md"
+curl -fsSL "$REPO_BASE/scripts/install.ts" -o "$SKILL_DIR/scripts/install.ts"
+curl -fsSL "$REPO_BASE/scripts/cleaner.ts" -o "$SKILL_DIR/scripts/cleaner.ts"
+curl -fsSL "$REPO_BASE/scripts/runner.sh" -o "$SKILL_DIR/scripts/runner.sh"
+curl -fsSL "$REPO_BASE/scripts/xml-parser.ts" -o "$SKILL_DIR/scripts/xml-parser.ts"
+curl -fsSL "$REPO_BASE/scripts/prompt-builder.ts" -o "$SKILL_DIR/scripts/prompt-builder.ts"
+curl -fsSL "$REPO_BASE/scripts/runner.ts" -o "$SKILL_DIR/scripts/runner.ts"
 curl -fsSL "$REPO_BASE/SKILL.md" -o "$SKILL_DIR/SKILL.md"
 curl -fsSL "$REPO_BASE/opencode-agent/coder.md" -o "$SKILL_DIR/opencode-agent/coder.md"
-curl -fsSL "$REPO_BASE/scripts/runner.ts" -o "$SKILL_DIR/scripts/runner.ts"
-curl -fsSL "$REPO_BASE/scripts/prompt-builder.ts" -o "$SKILL_DIR/scripts/prompt-builder.ts"
-curl -fsSL "$REPO_BASE/scripts/runner.sh" -o "$SKILL_DIR/scripts/runner.sh"
-curl -fsSL "$REPO_BASE/scripts/install.ts" -o "$SKILL_DIR/scripts/install.ts"
-curl -fsSL "$REPO_BASE/scripts/xml-parser.ts" -o "$SKILL_DIR/scripts/xml-parser.ts"
-curl -fsSL "$REPO_BASE/scripts/cleaner.ts" -o "$SKILL_DIR/scripts/cleaner.ts"
 
 # Verify
 if [ ! -f "$SKILL_DIR/SKILL.md" ]; then

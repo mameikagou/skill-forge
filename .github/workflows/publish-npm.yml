@@ -4,7 +4,7 @@
 # Also available as manual workflow_dispatch.
 #
 # Prerequisites:
-#   1. npm org @mameikagou created (free public)
+#   1. npm org @skill-forge created (free public)
 #   2. NPM_TOKEN secret added to repo Settings -> Secrets -> Actions
 
 name: Publish to npm
@@ -43,6 +43,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "dir=skills/${{ github.event.inputs.skill }}" >> "$GITHUB_OUTPUT"
           else
+            # For tag pushes, publish all non-private skills
             # For tag pushes, publish all non-private skills
             echo "dir=skills/opencode-coder" >> "$GITHUB_OUTPUT"
           fi

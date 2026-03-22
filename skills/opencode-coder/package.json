@@ -1,5 +1,5 @@
 {
-  "name": "@mameikagou/opencode-coder",
+  "name": "@skill-forge/opencode-coder",
   "version": "2.1.0",
   "private": false,
   "bin": {

@@ -17,8 +17,8 @@ mkdir -p "$SKILL_DIR/scripts"
 # Download files
 curl -fsSL "$REPO_BASE/references/agent-skills-spec.md" -o "$SKILL_DIR/references/agent-skills-spec.md"
 curl -fsSL "$REPO_BASE/references/claude-code-extensions.md" -o "$SKILL_DIR/references/claude-code-extensions.md"
-curl -fsSL "$REPO_BASE/SKILL.md" -o "$SKILL_DIR/SKILL.md"
 curl -fsSL "$REPO_BASE/scripts/install.ts" -o "$SKILL_DIR/scripts/install.ts"
+curl -fsSL "$REPO_BASE/SKILL.md" -o "$SKILL_DIR/SKILL.md"
 
 # Verify
 if [ ! -f "$SKILL_DIR/SKILL.md" ]; then
