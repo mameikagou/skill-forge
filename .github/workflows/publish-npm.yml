@@ -1,0 +1,61 @@
+# Publish COMPLEX skills to npm when a version tag is pushed.
+#
+# Trigger: push tag matching v* (e.g., v2.1.0)
+# Also available as manual workflow_dispatch.
+#
+# Prerequisites:
+#   1. npm org @mameikagou created (free public)
+#   2. NPM_TOKEN secret added to repo Settings -> Secrets -> Actions
+
+name: Publish to npm
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      skill:
+        description: "Skill to publish (directory name under skills/)"
+        required: true
+        default: "opencode-coder"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - run: bun install --frozen-lockfile
+
+      # Determine which skill to publish
+      - name: Resolve skill directory
+        id: skill
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "dir=skills/${{ github.event.inputs.skill }}" >> "$GITHUB_OUTPUT"
+          else
+            # For tag pushes, publish all non-private skills
+            echo "dir=skills/opencode-coder" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        working-directory: ${{ steps.skill.outputs.dir }}
+        run: |
+          if [ -f "package.json" ] && grep -q '"build"' package.json; then
+            bun run build
+          fi
+
+      - name: Publish
+        working-directory: ${{ steps.skill.outputs.dir }}
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

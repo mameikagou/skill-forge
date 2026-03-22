@@ -7,3 +7,4 @@
 
 export { log, fatal } from "./logger";
 export type { SkillManifest } from "./types";
+export { extractRawFrontmatter, parseSkillManifest } from "./yaml-frontmatter";

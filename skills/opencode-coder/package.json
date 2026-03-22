@@ -1,9 +1,22 @@
 {
-  "name": "@skill-forge/opencode-coder",
+  "name": "@mameikagou/opencode-coder",
   "version": "2.1.0",
-  "private": true,
+  "private": false,
+  "bin": {
+    "init-skill": "dist/init-skill.js"
+  },
+  "files": [
+    "dist",
+    "ai-install.md",
+    "SKILL.md",
+    "scripts",
+    "references",
+    "opencode-agent"
+  ],
   "scripts": {
     "test": "bun test",
+    "build": "bun build src/init-skill.ts --outdir dist --target node",
+    "prepublishOnly": "bun run build",
     "install:skill": "bun scripts/install.ts"
   },
   "dependencies": {

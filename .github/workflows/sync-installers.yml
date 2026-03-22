@@ -1,0 +1,44 @@
+# Auto-sync ai-install.md files when skill content changes.
+#
+# Triggered on push to main when any file under skills/ is modified.
+# Regenerates all ai-install.md files and commits the diff back.
+#
+# Prerequisite: repo Settings -> Actions -> Workflow permissions -> "Read and write permissions"
+
+name: Sync ai-install.md
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - "scripts/generate-installers.ts"
+      - "packages/shared/src/**"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run generate
+
+      - name: Check for changes
+        id: diff
+        run: |
+          git diff --quiet skills/*/ai-install.md skills/*/install.sh || echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add skills/*/ai-install.md skills/*/install.sh
+          git commit -m "chore: sync ai-install.md [skip ci]"
+          git push
