@@ -17,14 +17,14 @@
 This installation will:
 - CREATE directory: `$HOME/.claude/skills/opencode-coder/`
 - CREATE file: `$HOME/.claude/skills/opencode-coder/references/model-guide.md`
-- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/install.ts`
-- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/cleaner.ts`
-- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/runner.sh`
-- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/xml-parser.ts`
-- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/prompt-builder.ts`
-- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/runner.ts`
 - CREATE file: `$HOME/.claude/skills/opencode-coder/SKILL.md`
 - CREATE file: `$HOME/.claude/skills/opencode-coder/opencode-agent/coder.md`
+- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/runner.ts`
+- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/prompt-builder.ts`
+- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/runner.sh`
+- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/install.ts`
+- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/xml-parser.ts`
+- CREATE file: `$HOME/.claude/skills/opencode-coder/scripts/cleaner.ts`
 - MODIFY: Nothing. No existing files will be changed.
 
 ## Installation Steps
