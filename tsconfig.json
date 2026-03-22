@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["@types/bun"]
+  },
+  "include": [
+    "skills/*/scripts/**/*.ts",
+    "skills/*/src/**/*.ts",
+    "skills/*/__tests__/**/*.ts",
+    "packages/*/src/**/*.ts",
+    "scripts/**/*.ts"
+  ]
+}
