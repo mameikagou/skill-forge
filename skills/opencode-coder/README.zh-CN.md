@@ -6,10 +6,10 @@ Claude Code 技能工坊 — 让 Claude 自身变得更强的工具集。
 
 | 技能 | 状态 | 描述 |
 |------|------|------|
-| [opencode-coder](skills/opencode-coder/) | ✅ 可用 | 把代码生成委派给便宜模型（MiniMax、Codex），节省 95% 成本 |
-| [write-skill](skills/write-skill/) | 📦 占位 | 教 Claude 写出符合 Anthropic 规范的 skill |
-| [skill-auto-installer](skills/skill-auto-installer/) | 📦 占位 | 将任意 skill 打包为一键安装格式 |
-| [code-graph](skills/code-graph/) | 📦 占位 | 构建本地 LSP 代码图谱，高效阅读大型代码库 |
+| [opencode-coder]() | ✅ 可用 | 把代码生成委派给便宜模型（MiniMax、Codex），节省 95% 成本 |
+| [write-skill](../write-skill) | 📦 占位 | 教 Claude 写出符合 Anthropic 规范的 skill |
+| [skill-auto-installer](../skill-auto-installer) | 📦 占位 | 将任意 skill 打包为一键安装格式 |
+| [code-graph](../code-graph) | 📦 占位 | 构建本地 LSP 代码图谱，高效阅读大型代码库 |
 
 ## 开始使用
 

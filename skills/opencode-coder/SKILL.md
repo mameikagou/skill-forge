@@ -1,10 +1,11 @@
 ---
 name: opencode-coder
-description: "通过 OpenCode CLI 的 coder agent 调用 MiniMax-M2.7 或 GPT-5.3-Codex 执行 1-3 个代码文件的批量修改/重写。当修改量超过 10 行或涉及 2-3 个文件联动时自动触发，也可通过 /opencode-coder 手动触发。Claude 负责读码、派发、审查，外部模型负责代码生成。"
+description: 通过 OpenCode CLI 的 coder agent 调用 MiniMax-M2.7 或 GPT-5.3-Codex 执行 1-3 个代码文件的批量修改/重写。当修改量超过 10 行或涉及 2-3 个文件联动时自动触发，也可通过 /opencode-coder 手动触发。Claude 负责读码、派发、审查，外部模型负责代码生成。
 argument-hint: "codex|minimax file1[,file2,file3] instruction"
 disable-model-invocation: false
 allowed-tools: ["Read", "Grep", "Glob", "Bash(bun ${CLAUDE_SKILL_DIR}/scripts/runner.ts *)"]
 context: fork
+compatibility: OpenCode CLI + Bun runtime
 metadata:
   version: 2.1.0
   author: mrlonely

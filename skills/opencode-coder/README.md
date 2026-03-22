@@ -6,10 +6,10 @@ A monorepo of Claude Code skills — tools that make Claude itself more capable.
 
 | Skill | Status | Description |
 |-------|--------|-------------|
-| [opencode-coder](skills/opencode-coder/) | ✅ Ready | Delegates code generation to cheap models (MiniMax, Codex) — 95% cost savings |
-| [write-skill](skills/write-skill/) | 📦 Placeholder | Teaches Claude to write skills conforming to Anthropic's spec |
-| [skill-auto-installer](skills/skill-auto-installer/) | 📦 Placeholder | Packages any skill for one-command user installation |
-| [code-graph](skills/code-graph/) | 📦 Placeholder | Builds local LSP code graph for efficient codebase reading |
+| [opencode-coder]() | ✅ Ready | Delegates code generation to cheap models (MiniMax, Codex) — 95% cost savings |
+| [write-skill](../write-skill) | 📦 Placeholder | Teaches Claude to write skills conforming to Anthropic's spec |
+| [skill-auto-installer](../skill-auto-installer) | 📦 Placeholder | Packages any skill for one-command user installation |
+| [code-graph](../code-graph) | 📦 Placeholder | Builds local LSP code graph for efficient codebase reading |
 
 ## Setup
 
