@@ -16,8 +16,8 @@
 
 This installation will:
 - CREATE directory: `$HOME/.claude/skills/code-graph/`
-- CREATE file: `$HOME/.claude/skills/code-graph/scripts/install.ts`
 - CREATE file: `$HOME/.claude/skills/code-graph/SKILL.md`
+- CREATE file: `$HOME/.claude/skills/code-graph/scripts/install.ts`
 - MODIFY: Nothing. No existing files will be changed.
 
 ## Installation Steps

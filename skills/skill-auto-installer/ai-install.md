@@ -16,8 +16,8 @@
 
 This installation will:
 - CREATE directory: `$HOME/.claude/skills/skill-auto-installer/`
-- CREATE file: `$HOME/.claude/skills/skill-auto-installer/scripts/install.ts`
 - CREATE file: `$HOME/.claude/skills/skill-auto-installer/SKILL.md`
+- CREATE file: `$HOME/.claude/skills/skill-auto-installer/scripts/install.ts`
 - MODIFY: Nothing. No existing files will be changed.
 
 ## Installation Steps
