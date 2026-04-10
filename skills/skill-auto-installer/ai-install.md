@@ -27,7 +27,7 @@ This installation will:
 Run the following command to download and execute the installer:
 
 ```bash
-curl -fsSL "https://raw.githubusercontent.com/mameikagou/cheap-hands/main/skills/skill-auto-installer/install.sh" | bash
+curl -fsSL "https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/skill-auto-installer/install.sh" | bash
 ```
 
 This script will:
@@ -35,25 +35,24 @@ This script will:
 - Download all skill files from GitHub
 - Verify the installation
 
-
-### Ensure skills directory is registered
+### Step 2: Ensure skills directory is registered
 
 Read `$HOME/.claude/settings.json`. Check if the `"skills"` array contains
 a path that covers `$HOME/.claude/skills/`. If not, add `"$HOME/.claude/skills"`
 to the array.
 
-### Verify installation
+### Step 3: Verify installation
 
 Read `$HOME/.claude/skills/skill-auto-installer/SKILL.md` and confirm:
 - YAML frontmatter has valid `name` and `description` fields
 - File content is not empty or corrupted
 
-### Report to user
+### Step 4: Report to user
 
 Tell the user:
 "skill-auto-installer installed successfully!
 - Location: ~/.claude/skills/skill-auto-installer/
-- Trigger: 将任意 Claude Code 技能（Skill）转化为零摩擦自动安装包。当用户要求"让这个技能可分发"、"生成安装脚本"、"打包技能"、"创建 ai-install.md"、"让别人一行命令装我的 skill" 时触发。不适用于技能创建（
+- Trigger: 将任意 Claude Code 技能（Skill）转化为零摩擦自动安装包。当用户要求"让这个技能可分发"、"生成安装脚本"、"打包技能"、"创建 ai-install.md"、"让别人一行命令装我的 skill" 时触发。不适用于技能创建（那是 write-skill 的职责）。
 - To uninstall: delete the ~/.claude/skills/skill-auto-installer/ directory"
 
 ## Rollback

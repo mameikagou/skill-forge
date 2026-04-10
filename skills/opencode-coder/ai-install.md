@@ -34,7 +34,7 @@ This installation will:
 Run the following command to download and execute the installer:
 
 ```bash
-curl -fsSL "https://raw.githubusercontent.com/mameikagou/cheap-hands/main/skills/opencode-coder/install.sh" | bash
+curl -fsSL "https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/opencode-coder/install.sh" | bash
 ```
 
 This script will:

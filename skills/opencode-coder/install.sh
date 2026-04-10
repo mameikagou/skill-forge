@@ -5,7 +5,7 @@ set -euo pipefail
 # Installs the "opencode-coder" skill to ~/.claude/skills/opencode-coder/
 
 SKILL_DIR="$HOME/.claude/skills/opencode-coder"
-REPO_BASE="https://raw.githubusercontent.com/mameikagou/cheap-hands/main/skills/opencode-coder"
+REPO_BASE="https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/opencode-coder"
 
 echo "Installing opencode-coder..."
 

@@ -5,7 +5,7 @@ set -euo pipefail
 # Installs the "code-graph" skill to ~/.claude/skills/code-graph/
 
 SKILL_DIR="$HOME/.claude/skills/code-graph"
-REPO_BASE="https://raw.githubusercontent.com/mameikagou/cheap-hands/main/skills/code-graph"
+REPO_BASE="https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/code-graph"
 
 echo "Installing code-graph..."
 

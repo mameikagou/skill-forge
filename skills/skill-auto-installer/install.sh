@@ -5,7 +5,7 @@ set -euo pipefail
 # Installs the "skill-auto-installer" skill to ~/.claude/skills/skill-auto-installer/
 
 SKILL_DIR="$HOME/.claude/skills/skill-auto-installer"
-REPO_BASE="https://raw.githubusercontent.com/mameikagou/cheap-hands/main/skills/skill-auto-installer"
+REPO_BASE="https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/skill-auto-installer"
 
 echo "Installing skill-auto-installer..."
 

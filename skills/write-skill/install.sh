@@ -5,7 +5,7 @@ set -euo pipefail
 # Installs the "write-skill" skill to ~/.claude/skills/write-skill/
 
 SKILL_DIR="$HOME/.claude/skills/write-skill"
-REPO_BASE="https://raw.githubusercontent.com/mameikagou/cheap-hands/main/skills/write-skill"
+REPO_BASE="https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/write-skill"
 
 echo "Installing write-skill..."
 

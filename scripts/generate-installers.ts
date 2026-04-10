@@ -26,7 +26,7 @@ import { parseSkillManifest } from "../packages/shared/src/yaml-frontmatter";
 // ============================================================================
 
 const REPO_OWNER = "mameikagou";
-const REPO_NAME = "cheap-hands";
+const REPO_NAME = "skill-forge";
 const REPO_BRANCH = "main";
 const RAW_BASE = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}`;
 

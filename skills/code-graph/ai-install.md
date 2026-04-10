@@ -27,7 +27,7 @@ This installation will:
 Run the following command to download and execute the installer:
 
 ```bash
-curl -fsSL "https://raw.githubusercontent.com/mameikagou/cheap-hands/main/skills/code-graph/install.sh" | bash
+curl -fsSL "https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/code-graph/install.sh" | bash
 ```
 
 This script will:
