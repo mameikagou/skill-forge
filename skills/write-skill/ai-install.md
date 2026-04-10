@@ -16,10 +16,10 @@
 
 This installation will:
 - CREATE directory: `$HOME/.claude/skills/write-skill/`
+- CREATE file: `$HOME/.claude/skills/write-skill/scripts/install.ts`
 - CREATE file: `$HOME/.claude/skills/write-skill/SKILL.md`
 - CREATE file: `$HOME/.claude/skills/write-skill/references/claude-code-extensions.md`
 - CREATE file: `$HOME/.claude/skills/write-skill/references/agent-skills-spec.md`
-- CREATE file: `$HOME/.claude/skills/write-skill/scripts/install.ts`
 - MODIFY: Nothing. No existing files will be changed.
 
 ## Installation Steps
