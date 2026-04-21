@@ -14,6 +14,7 @@ mkdir -p "$SKILL_DIR"
 
 # Download files
 curl -fsSL "$REPO_BASE/SKILL.md" -o "$SKILL_DIR/SKILL.md"
+curl -fsSL "$REPO_BASE/SKILL-EN.md" -o "$SKILL_DIR/SKILL-EN.md"
 
 # Verify
 if [ ! -f "$SKILL_DIR/SKILL.md" ]; then
@@ -22,15 +23,25 @@ if [ ! -f "$SKILL_DIR/SKILL.md" ]; then
   exit 1
 fi
 
-# Verify YAML frontmatter exists
-if ! head -1 "$SKILL_DIR/SKILL.md" | grep -q "^---"; then
-  echo "ERROR: Installation failed - SKILL.md has invalid frontmatter"
+if [ ! -f "$SKILL_DIR/SKILL-EN.md" ]; then
+  echo "ERROR: Installation failed - SKILL-EN.md not found"
   rm -rf "$SKILL_DIR"
   exit 1
 fi
 
+# Verify YAML frontmatter exists on both files
+for f in "$SKILL_DIR/SKILL.md" "$SKILL_DIR/SKILL-EN.md"; do
+  if ! head -1 "$f" | grep -q "^---"; then
+    echo "ERROR: Installation failed - $(basename "$f") has invalid frontmatter"
+    rm -rf "$SKILL_DIR"
+    exit 1
+  fi
+done
+
 echo ""
 echo "anti-ai-writing installed successfully!"
 echo "  Location: $SKILL_DIR"
-echo "  Trigger: 当用户要求降 AI 率、去 AI 味、降低查重率、改写论文时触发"
+echo "  Chinese:  SKILL.md    (知网/万方/维普/PaperPass)"
+echo "  English:  SKILL-EN.md (Turnitin/GPTZero/Copyleaks/Originality.ai/Grammarly)"
+echo "  Trigger:  当用户要求降 AI 率、去 AI 味、降低查重率、改写论文时触发"
 echo "  To uninstall: rm -rf $SKILL_DIR"
