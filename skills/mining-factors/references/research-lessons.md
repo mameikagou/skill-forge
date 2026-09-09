@@ -147,3 +147,8 @@ These records are evidence and corrections, not a new universal contract. Resolv
 ### User-requested four-to-one splits were replaced by arbitrary years
 
 2026-09-09：美股两套策略此前被切为SPY约56/44、多因子约58/42，并只跑MA120/1.5x和Top10/Buffer15/Cap2，未完成用户要的改进比较。用户明确要求四一分后，不能继续解释历史污染来替代实际重跑。按固定交易日历取floor(4N/5)开发、余下检验，冻结日期/数量和候选，再跑原生账户；复核SPY/QQQ、MA60/120、1.5/2x及Top15/Buffer20/Cap3–4。具体配置属于本次用户实验，不写成全局“正确参数”。放宽Cap一定有Alpha、现货杠杆无强平风险、80/20唯一正确等附件判断不能不经验证写成知识。保留原配置对照和失败，结论对应实际实验。
+
+
+### Risk reentry was accidentally gated by a monthly review
+
+2026-09-09用户附件01a085a0-5ad2-791e-a890-352c5777d776指出美股宽基策略退出每日执行、重入却只能每20交易日执行。源码与原生账户测试确认，修复后趋势恢复的下一开盘能重入、其余续持零订单。必须拆开“只修重入”与“完全取消择时”，分别观察主动避险和risk_on空仓。附件对低波有害、科技/半导体Cap4合计只能4只、事后牛股即可证明Alpha的判断不能整体照抄；实际源码把科技和半导体分两组。保持用户四一分，在开发段先比较因子频段、低波权重、集中度和调度，再报告全部留段结果及回撤；选股失败不能以杠杆指数收益或技术pass代替。
