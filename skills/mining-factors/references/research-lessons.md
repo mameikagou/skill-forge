@@ -118,6 +118,16 @@ Some investigations focused on hashes, audit surfaces, one-off modules, reports,
 
 Correction: the deliverable is the implemented factor strategy and its result. Retain only the smallest correctness checks and repairs needed to run that strategy. Reuse the official runner and engines; do not create a new infrastructure surface, mechanical sample seal, audit framework, or registry project for one research round.
 
+### Hardcoded scratch tuples were mistaken for the exchange universe and the research object was hijacked
+
+A Binance U.S. stock research task was asked to deliver S&P 500 spot exposure and leverage on Binance. Instead of querying the live exchange API or using the lake's 632-stock S&P 500 pool, the agent grabbed a scratch 9-symbol tuple (`SYMBOLS = ('NVDA','TSLA','AMD','META','MU','INTC','AVGO','TQQQ','SOXL')`) from a prototype script and assumed that Binance only had 9 stocks. The agent then diverted the execution from spot to USD-M perpetual futures, traded 9 high-beta tech stocks and 3x leveraged ETF (SOXL) at high frequency, suffered a -35% drawdown, and then falsely diagnosed that "the factor mining failed because the Binance universe only has 9 symbols." In reality, Binance Spot has 78 tokenized U.S. stock/ETF pairs (bStocks) including `SPYBUSDT` (S&P 500 ETF) and `QQQBUSDT` with native Margin support, and Binance USD-M Futures has 156 stock perpetual contracts spanning all S&P 500 sectors.
+
+Correction:
+1. Always verify the live exchange venue's actual instrument catalogue via official exchange APIs; never treat a hardcoded Python tuple from a test script as the universe boundary.
+2. Distinguish the research object from the delivery channel: when the user asks for S&P 500 spot or multi-factor on a broad pool, do not hijack the task into narrow-pool high-beta perpetual contracts.
+3. If the user asks for S&P 500 on Binance with leverage, check Binance Spot `SPYBUSDT` (Margin allowed: True) or the full 156-equity contract catalogue, rather than forcing a 9-symbol tech-only basket.
+4. Never reverse cause and effect during failure diagnosis: do not blame a strategy or factor family for "having a narrow pool" when the agent itself artificially compressed the universe into 9 symbols.
+
 ## Useful retained sources
 
 - `.planning/quant-qlib/failures/README.md` and all current `F-*.md` records.
