@@ -142,3 +142,8 @@ Correction:
 - OpenMemory `investment-learning` memory `3254e9a0-960e-49dc-9766-f6e831db9041`: predictor evidence, combination evidence, and costed trading-policy evidence are three separate layers. Its metadata was verified as `canonical_project=investment-learning`.
 
 These records are evidence and corrections, not a new universal contract. Resolve apparent conflict by returning to the current frozen contract, the live code path, and the original methodological source.
+
+
+### User-requested four-to-one splits were replaced by arbitrary years
+
+2026-09-09：美股两套策略此前被切为SPY约56/44、多因子约58/42，并只跑MA120/1.5x和Top10/Buffer15/Cap2，未完成用户要的改进比较。用户明确要求四一分后，不能继续解释历史污染来替代实际重跑。按固定交易日历取floor(4N/5)开发、余下检验，冻结日期/数量和候选，再跑原生账户；复核SPY/QQQ、MA60/120、1.5/2x及Top15/Buffer20/Cap3–4。具体配置属于本次用户实验，不写成全局“正确参数”。放宽Cap一定有Alpha、现货杠杆无强平风险、80/20唯一正确等附件判断不能不经验证写成知识。保留原配置对照和失败，结论对应实际实验。
