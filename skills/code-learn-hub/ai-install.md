@@ -32,10 +32,10 @@ Write the following content to `$HOME/.claude/skills/code-learn-hub/SKILL.md`:
 ```
 ---
 name: code-learn-hub
-description: 指导 AI 将代码库学习（尤其是前端工程师理解后端 Java/Go 体系）系统化梳理为可交互 HTML 架构图解，并规范规划本地学习仓库的文件组织与认知模型。在用户需要拆解新项目、梳理调用链路、规划沉淀目录或生成白天浅色系交互工件时触发。
+description: 指导 AI 将代码库学习（尤其是前端工程师理解后端 Java/Go 体系）系统化梳理为可交互 HTML 架构图解，并规范规划本地学习仓库的文件组织与认知模型。在用户需要拆解新项目、梳理调用链路、规划沉淀目录、提到"看下 skill，画图/写 html"、分析线上排障或生成白天浅色系交互工件时触发。
 compatibility: Requires file writing capability
 metadata:
-  version: 1.0.0
+  version: 1.0.1
   category: engineering-learning
 ---
 
@@ -149,7 +149,7 @@ Read `$HOME/.claude/skills/code-learn-hub/SKILL.md` and confirm:
 Tell the user:
 "code-learn-hub installed successfully!
 - Location: ~/.claude/skills/code-learn-hub/
-- Trigger: 指导 AI 将代码库学习（尤其是前端工程师理解后端 Java/Go 体系）系统化梳理为可交互 HTML 架构图解，并规范规划本地学习仓库的文件组织与认知模型。在用户需要拆解新项目、梳理调用链路、规划沉淀目录或生成白天浅色系交互工件时触发。
+- Trigger: 指导 AI 将代码库学习（尤其是前端工程师理解后端 Java/Go 体系）系统化梳理为可交互 HTML 架构图解，并规范规划本地学习仓库的文件组织与认知模型。在用户需要拆解新项目、梳理调用链路、规划沉淀目录、提到"看下 skill，画图/写
 - To uninstall: delete the ~/.claude/skills/code-learn-hub/ directory"
 
 ## Rollback
