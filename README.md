@@ -8,6 +8,14 @@ A collection of Claude Code skills. Install any skill by pasting one line into C
 
 Copy any line below into your Claude Code conversation. Claude will fetch the instructions and install the skill automatically.
 
+### antigravity-chat-read
+
+Read local Antigravity conversation text with a dependency-free Bun CLI: session/title lookup, newest-first messages, role filtering, skip, and stable step cursors. Verified display-name mappings stay local; live Multica display-name lookup is not currently available through the task CLI.
+
+```
+Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/antigravity-chat-read/ai-install.md and follow the instructions inside.
+```
+
 ### route-openmemory
 
 Routes, classifies, stores, queries, deduplicates, and migrates records in the original OpenMemory service across the three canonical projects and five memory sectors.
@@ -131,6 +139,7 @@ Fetch the following URLs one by one and follow the instructions inside each:
 11. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/clash-party-safe-update/ai-install.md
 12. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-openmemory/ai-install.md
 13. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-longmemory/ai-install.md
+14. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/antigravity-chat-read/ai-install.md
 ```
 
 ## Uninstall
