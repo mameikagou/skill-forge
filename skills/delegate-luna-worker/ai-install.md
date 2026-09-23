@@ -33,7 +33,7 @@ Write the following content to `$HOME/.claude/skills/delegate-luna-worker/SKILL.
 ```
 ---
 name: delegate-luna-worker
-description: Install or configure the luna-worker Agent and delegate clearly bounded work to GPT-5.6 Luna with max reasoning under active main-agent oversight. Use when the user explicitly asks to set up or use Luna, Luna Max, luna-worker, or a Luna subagent, especially for implementation that needs a detailed prompt, strict change boundaries, protection against over-design, shared-worktree coordination, and direct main-agent intervention when quality is low.
+description: Install or configure the luna-worker Agent and delegate clearly bounded work to GPT-6 Luna with max reasoning under active main-agent oversight. Use when the user explicitly asks to set up or use Luna, Luna Max, luna-worker, or a Luna subagent, especially for implementation that needs a detailed prompt, strict change boundaries, protection against over-design, shared-worktree coordination, and direct main-agent intervention when quality is low.
 ---
 
 # Delegate Luna Worker
@@ -48,8 +48,8 @@ Resolve the target as `$CODEX_HOME/agents/luna-worker.toml` when `CODEX_HOME` is
 
 ```toml
 name = "luna-worker"
-description = "Executes clearly bounded delegated tasks with GPT-5.6 Luna at maximum reasoning effort. Use when ownership, scope, constraints, and a concrete deliverable can be stated upfront."
-model = "gpt-5.6-luna"
+description = "Executes clearly bounded delegated tasks with GPT-6 Luna at maximum reasoning effort. Use when ownership, scope, constraints, and a concrete deliverable can be stated upfront."
+model = "gpt-6-luna"
 model_reasoning_effort = "max"
 
 developer_instructions = '''
@@ -67,10 +67,10 @@ Return a concise handoff containing: outcome, files changed or evidence inspecte
 
 After writing the file:
 
-1. Parse it with an available TOML parser without installing dependencies globally. Assert that `name`, `description`, `model`, `model_reasoning_effort`, and `developer_instructions` exist; assert `name = "luna-worker"`, `model = "gpt-5.6-luna"`, `model_reasoning_effort = "max"`, and non-empty description and instructions.
+1. Parse it with an available TOML parser without installing dependencies globally. Assert that `name`, `description`, `model`, `model_reasoning_effort`, and `developer_instructions` exist; assert `name = "luna-worker"`, `model = "gpt-6-luna"`, `model_reasoning_effort = "max"`, and non-empty description and instructions.
 2. Run a Codex configuration diagnostic when available. Distinguish validation of the main Codex configuration from validation of the Agent file; do not claim the diagnostic parsed the Agent unless it did.
 3. Show the user a unified diff limited to this file. For a new file, diff it against `/dev/null`; for an update, preserve a pre-edit snapshot and diff old against new. Do not expose unrelated configuration.
-4. Explain that Agent discovery is snapshotted when a Codex task starts. A new task or Codex restart is required before `spawn_agent` can select a newly created or changed Agent. Runtime verification consists of spawning `luna-worker` after reload and confirming that the child turn uses `gpt-5.6-luna` with `max` effort.
+4. Explain that Agent discovery is snapshotted when a Codex task starts. A new task or Codex restart is required before `spawn_agent` can select a newly created or changed Agent. Runtime verification consists of spawning `luna-worker` after reload and confirming that the child turn uses `gpt-6-luna` with `max` effort.
 
 If no TOML parser is available, report that syntax validation is pending instead of installing a global package or claiming success. Do not start a separate Codex instance solely for runtime validation unless the user explicitly requests it.
 
@@ -138,7 +138,7 @@ Read `$HOME/.claude/skills/delegate-luna-worker/SKILL.md` and confirm:
 Tell the user:
 "delegate-luna-worker installed successfully!
 - Location: ~/.claude/skills/delegate-luna-worker/
-- Trigger: Install or configure the luna-worker Agent and delegate clearly bounded work to GPT-5.6 Luna with max reasoning under ac
+- Trigger: Install or configure the luna-worker Agent and delegate clearly bounded work to GPT-6 Luna with max reasoning under ac
 - To uninstall: delete the ~/.claude/skills/delegate-luna-worker/ directory"
 
 ## Rollback

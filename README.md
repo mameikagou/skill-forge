@@ -90,7 +90,7 @@ Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/dsh-w
 
 ### delegate-luna-worker
 
-Installs or repairs the Luna Worker Agent and delegates clearly bounded work to GPT-5.6 Luna with maximum reasoning effort. It requires detailed task prompts with exact change boundaries, constrains speculative over-design, and keeps the main agent active so it can directly repair low-quality work while Luna continues around those edits.
+Installs or repairs the Luna Worker Agent and delegates clearly bounded work to GPT-6 Luna with maximum reasoning effort. It requires detailed task prompts with exact change boundaries, constrains speculative over-design, and keeps the main agent active so it can directly repair low-quality work while Luna continues around those edits.
 
 ```
 Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/delegate-luna-worker/ai-install.md and follow the instructions inside.
