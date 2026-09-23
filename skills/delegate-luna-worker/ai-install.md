@@ -138,7 +138,7 @@ Read `$HOME/.claude/skills/delegate-luna-worker/SKILL.md` and confirm:
 Tell the user:
 "delegate-luna-worker installed successfully!
 - Location: ~/.claude/skills/delegate-luna-worker/
-- Trigger: Install or configure the luna-worker Agent and delegate clearly bounded work to GPT-6 Luna with max reasoning under ac
+- Trigger: Install or configure the luna-worker Agent and delegate clearly bounded work to GPT-6 Luna with max reasoning under acti
 - To uninstall: delete the ~/.claude/skills/delegate-luna-worker/ directory"
 
 ## Rollback
