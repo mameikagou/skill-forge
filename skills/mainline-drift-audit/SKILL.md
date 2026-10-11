@@ -79,6 +79,7 @@ Check for these failure patterns:
 
 - No official engine, data path, registry, or output contract was frozen before development.
 - A “temporary”, “lightweight”, “compatible”, “research-only”, or “quick” implementation duplicates an official engine.
+- A research improvement (holding rule, factor, model) is built on a temporary nomination list, a separately trained ranker, or its own account instead of the live strategy, then compared only against an index (e.g. a Livermore rule on a price-only top-10 while the daily card uses another ranking).
 - A formal backtest is replaced by hand-written cash, positions, broker, fills, fees, or NAV logic.
 - Research and formal execution boundaries are blurred, so approximate returns are presented as formal results.
 - One-off scripts, Round/Phase/date-specific modules, or abandoned prototypes live in production `src/`.

@@ -25,6 +25,12 @@ Do not claim that OpenMemory was checked when its query fails. Do not replace it
 
 Correction: state the requested result in one sentence, name the predictor/combination/portfolio/execution layer, and verify that every run directly answers it. A precise backtest of the wrong object is still wrong.
 
+### An improvement was built as a standalone strategy and judged against an index
+
+2026-10-11 (analyze2quant 静水 line): a Livermore probe-and-pyramid holding rule was attached to a temporary price-only top-10 nomination list, not to the nominations the daily card actually used. That list was weak on its own (same list, existing holding: small 46%, mid 23% over 2021–2025). The resulting "small +92% beats, mid +25% loses versus QQQ 105%" could not say whether Livermore improves the live strategy. The same line also trained three separate rankers (wide-pool, book-factor, continuous-target) instead of adding those inputs to the live ranking. The goal text "portfolio beats QQQ" encouraged turning every idea into its own account. The user had to delete all of it; GPT executors had repeated this pattern for months.
+
+Correction: follow "改进加在现行策略上，和现行策略比" in the main skill. Name the live version, change one layer, and report live+change versus live. Indices are background only.
+
 ### Weak inputs were rejected too early
 
 Earlier workflows required each weak input to satisfy many standalone profitability and stability gates. This removed inputs whose value could exist only after combination. Later searches relaxed the gates but mostly added adjacent windows: hundreds of formulas represented only a small number of independent directions.
