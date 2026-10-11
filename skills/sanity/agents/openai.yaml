@@ -1,4 +1,0 @@
-interface:
-  display_name: "常识审查"
-  short_description: "质检协议：合同优先与证据审查，因子实质规则引用 mining-factors"
-  default_prompt: "使用 $sanity 先读取已冻结合同，并检索 planning、Brain 和可靠资料，再审查这个量化点子或系统。"

@@ -4,7 +4,7 @@ A collection of Claude Code skills. Install any skill by pasting one line into C
 
 ## Install Skills
 
-本地已 clone 本仓库的多环境用户：直接 `bun run link:skills`，把 codex / claude / pi(~/.agents/skills) / antigravity(~/.gemini/config/skills) 的安装目录换成指向仓库的文件级软链（sanity、mining-factors 强制接入，其余 forge 技能仅在已装时转换），仓库从此是唯一来源；仓库改动即时对所有 harness 生效，不认软链的环境用 `bun run link:skills -- --copy` 降级为同步副本。
+本地已 clone 本仓库的多环境用户：直接 `bun run link:skills`，把 codex / claude / pi(~/.agents/skills) / antigravity(~/.gemini/config/skills) 的安装目录换成指向仓库的文件级软链（mining-factors 强制接入，其余 forge 技能仅在已装时转换），仓库从此是唯一来源；仓库改动即时对所有 harness 生效，不认软链的环境用 `bun run link:skills -- --copy` 降级为同步副本。
 
 Copy any line below into your Claude Code conversation. Claude will fetch the instructions and install the skill automatically.
 
@@ -48,17 +48,9 @@ Turns real project notes into strong, interview-ready technical chains, resume b
 Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/suization/ai-install.md and follow the instructions inside.
 ```
 
-### sanity
-
-Pure reviewer for quantitative research ideas, campaigns and system mainlines: checks the frozen business contract, knowledge evidence, fatal flaws, campaign depth and system entropy. Factor-research substantive rules (ruler matching, rank-vs-magnitude, holding contracts, weak-factor protection, independence counting) live only in mining-factors; sanity references them and issues verdicts. Keeps weak-factor combination research permissive while guarding against leakage, fake breadth, and execution errors.
-
-```
-Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/sanity/ai-install.md and follow the instructions inside.
-```
-
 ### mining-factors
 
-Mines factors and implements the complete trading strategy: factor combination, entry, holding, replacement, exit, sizing, costs, and sample-out-of-sample evaluation. Single source of truth for how factor research is done correctly — the sanity reviewer references these rules instead of duplicating them. It keeps a bounded, source-backed chapter synthesis of the original factor-investing book and corrects it in place as the source is reread.
+Build-and-review handbook for quantitative research: improve the live strategy one layer at a time and compare against it, protect weak factors, rolling 4:1 validation, approved-engine accounting, and evidence-based review of ideas and campaigns (absorbed the former sanity skill). Keeps a source-backed chapter synthesis of the original factor-investing book.
 
 ```
 Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/mining-factors/ai-install.md and follow the instructions inside.
@@ -134,12 +126,11 @@ Fetch the following URLs one by one and follow the instructions inside each:
 6. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/dsh-worker-review/ai-install.md
 7. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/delegate-luna-worker/ai-install.md
 8. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/mining-factors/ai-install.md
-9. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/sanity/ai-install.md
-10. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/quant-ui-sync/ai-install.md
-11. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/clash-party-safe-update/ai-install.md
-12. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-openmemory/ai-install.md
-13. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-longmemory/ai-install.md
-14. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/antigravity-chat-read/ai-install.md
+9. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/quant-ui-sync/ai-install.md
+10. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/clash-party-safe-update/ai-install.md
+11. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-openmemory/ai-install.md
+12. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-longmemory/ai-install.md
+13. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/antigravity-chat-read/ai-install.md
 ```
 
 ## Uninstall

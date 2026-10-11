@@ -18,7 +18,6 @@ This installation will:
 - CREATE directory: `$HOME/.claude/skills/mining-factors/`
 - CREATE file: `$HOME/.claude/skills/mining-factors/SKILL.md`
 - CREATE file: `$HOME/.claude/skills/mining-factors/agents/openai.yaml`
-- CREATE file: `$HOME/.claude/skills/mining-factors/references/binance-us-equity-execution.md`
 - CREATE file: `$HOME/.claude/skills/mining-factors/references/book-chapter-summaries.md`
 - CREATE file: `$HOME/.claude/skills/mining-factors/references/research-lessons.md`
 - MODIFY: Nothing. No existing files will be changed.
@@ -56,7 +55,7 @@ Read `$HOME/.claude/skills/mining-factors/SKILL.md` and confirm:
 Tell the user:
 "mining-factors installed successfully!
 - Location: ~/.claude/skills/mining-factors/
-- Trigger: Use when mining, discovering, iterating, batch-testing, comparing, combining, transferring, or implementing quantitative
+- Trigger: 量化研究的施工与审查手册（挖因子、改进现行策略、因子组合、持有规则、回测与样本外、审查点子和研究流程）。在 analyze2quant 里做选股因子、持有规则、模型、回测，或审查一个量化点子、一批研究、一份 goal 时使用。规则唯一来源；
 - To uninstall: delete the ~/.claude/skills/mining-factors/ directory"
 
 ## Rollback

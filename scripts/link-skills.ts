@@ -32,7 +32,7 @@ const HARNESS_DIRS = [
 ];
 
 /** 强制安装到所有 harness 的技能 */
-const ALWAYS_INSTALL = ["sanity", "mining-factors"];
+const ALWAYS_INSTALL = ["mining-factors"];
 
 /** 安装产物与包文件，不镜像进 harness */
 const EXCLUDE = new Set(["ai-install.md", "install.sh", "package.json"]);
