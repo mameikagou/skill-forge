@@ -151,15 +151,17 @@ for (const harnessDir of HARNESS_DIRS) {
 }
 
 /**
- * Codex 全局提示词：仓库 agents/codex-AGENTS.md 是唯一来源。
+ * Codex 全局提示词：仓库 agents/AGENTS.md 是唯一来源。
  * - Windows CODEX_HOME（Codex App）：AGENTS.md 软链到它。
  * - WSL ~/.codex：Multica 给每个任务新建 codex-home，只复制 config.toml、不复制 AGENTS.md，
  *   所以把内容写进 config.toml 顶部的 developer_instructions，不再放 AGENTS.md，免得直接开 Codex 时读两遍。
  */
-const CODEX_AGENTS_SRC = join(ROOT, "agents/codex-AGENTS.md");
+const CODEX_AGENTS_SRC = join(ROOT, "agents/AGENTS.md");
 const WINDOWS_CODEX_HOME = "/mnt/c/Users/admin/.codex";
 const WSL_CODEX_CONFIG = join(homedir(), ".codex/config.toml");
-const BLOCK_BEGIN = "# BEGIN skill-forge developer_instructions (generated from agents/codex-AGENTS.md)";
+const BLOCK_BEGIN = "# BEGIN skill-forge developer_instructions (generated from agents/AGENTS.md)";
+// 按前缀找旧块：源文件改过名时，旧块的 BEGIN 行写的是旧文件名
+const BLOCK_BEGIN_PREFIX = "# BEGIN skill-forge developer_instructions";
 const BLOCK_END = "# END skill-forge developer_instructions";
 
 if (existsSync(WINDOWS_CODEX_HOME)) {
@@ -171,11 +173,16 @@ if (existsSync(WINDOWS_CODEX_HOME)) {
 
 if (existsSync(WSL_CODEX_CONFIG)) {
   const instructions = readFileSync(CODEX_AGENTS_SRC, "utf8");
-  if (instructions.includes("'''")) throw new Error("codex-AGENTS.md 里不能出现 ''' ，TOML 字面量字符串放不下");
+  if (instructions.includes("'''")) throw new Error("agents/AGENTS.md 里不能出现 ''' ，TOML 字面量字符串放不下");
   const block = `${BLOCK_BEGIN}\ndeveloper_instructions = '''\n${instructions}'''\n${BLOCK_END}\n\n`;
   const current = readFileSync(WSL_CODEX_CONFIG, "utf8");
-  const start = current.indexOf(BLOCK_BEGIN);
-  const rest = start === -1 ? current : current.slice(current.indexOf(BLOCK_END) + BLOCK_END.length).replace(/^\n+/, "");
+  let rest = current;
+  while (rest.includes(BLOCK_BEGIN_PREFIX)) {
+    const start = rest.indexOf(BLOCK_BEGIN_PREFIX);
+    const end = rest.indexOf(BLOCK_END, start);
+    if (end === -1) throw new Error("~/.codex/config.toml 里有 BEGIN 没有 END，手动修好再跑");
+    rest = rest.slice(0, start) + rest.slice(end + BLOCK_END.length).replace(/^\n+/, "");
+  }
   const next = block + rest;
   if (next !== current) {
     writeFileSync(WSL_CODEX_CONFIG, next);
