@@ -15,7 +15,7 @@
  *   bun scripts/link-skills.ts --copy   # 降级：改为复制文件（给不认软链的 harness）
  */
 
-import { readdirSync, mkdirSync, rmSync, lstatSync, symlinkSync, copyFileSync, existsSync, readlinkSync } from "node:fs";
+import { readdirSync, mkdirSync, rmSync, lstatSync, symlinkSync, copyFileSync, existsSync, readlinkSync, readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { homedir } from "node:os";
 
@@ -150,16 +150,42 @@ for (const harnessDir of HARNESS_DIRS) {
   }
 }
 
-/** Codex 全局提示词：仓库 agents/codex-AGENTS.md 是唯一来源，WSL 和 Windows 两个 CODEX_HOME 都指向它 */
+/**
+ * Codex 全局提示词：仓库 agents/codex-AGENTS.md 是唯一来源。
+ * - Windows CODEX_HOME（Codex App）：AGENTS.md 软链到它。
+ * - WSL ~/.codex：Multica 给每个任务新建 codex-home，只复制 config.toml、不复制 AGENTS.md，
+ *   所以把内容写进 config.toml 顶部的 developer_instructions，不再放 AGENTS.md，免得直接开 Codex 时读两遍。
+ */
 const CODEX_AGENTS_SRC = join(ROOT, "agents/codex-AGENTS.md");
-const CODEX_HOMES = [join(homedir(), ".codex"), "/mnt/c/Users/admin/.codex"];
+const WINDOWS_CODEX_HOME = "/mnt/c/Users/admin/.codex";
+const WSL_CODEX_CONFIG = join(homedir(), ".codex/config.toml");
+const BLOCK_BEGIN = "# BEGIN skill-forge developer_instructions (generated from agents/codex-AGENTS.md)";
+const BLOCK_END = "# END skill-forge developer_instructions";
 
-for (const codexHome of CODEX_HOMES) {
-  if (!existsSync(codexHome)) continue;
-  const dst = join(codexHome, "AGENTS.md");
+if (existsSync(WINDOWS_CODEX_HOME)) {
+  const dst = join(WINDOWS_CODEX_HOME, "AGENTS.md");
   const result = placeFile(CODEX_AGENTS_SRC, dst);
-  console.log(`${homedirRelative(dst)}: ${result === "unchanged" ? "up to date" : "linked"}`);
+  console.log(`${dst}: ${result === "unchanged" ? "up to date" : "linked"}`);
   if (result !== "unchanged") totalChanged++;
+}
+
+if (existsSync(WSL_CODEX_CONFIG)) {
+  const instructions = readFileSync(CODEX_AGENTS_SRC, "utf8");
+  if (instructions.includes("'''")) throw new Error("codex-AGENTS.md 里不能出现 ''' ，TOML 字面量字符串放不下");
+  const block = `${BLOCK_BEGIN}\ndeveloper_instructions = '''\n${instructions}'''\n${BLOCK_END}\n\n`;
+  const current = readFileSync(WSL_CODEX_CONFIG, "utf8");
+  const start = current.indexOf(BLOCK_BEGIN);
+  const rest = start === -1 ? current : current.slice(current.indexOf(BLOCK_END) + BLOCK_END.length).replace(/^\n+/, "");
+  const next = block + rest;
+  if (next !== current) {
+    writeFileSync(WSL_CODEX_CONFIG, next);
+    totalChanged++;
+    console.log(`~/.codex/config.toml: developer_instructions updated`);
+  } else {
+    console.log(`~/.codex/config.toml: up to date`);
+  }
+  const wslAgents = join(homedir(), ".codex/AGENTS.md");
+  if (isLink(wslAgents) && readlinkTarget(wslAgents) === CODEX_AGENTS_SRC) rmSync(wslAgents);
 }
 
 function homedirRelative(p: string): string {
