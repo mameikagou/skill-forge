@@ -6,7 +6,9 @@ A collection of Claude Code skills. Install any skill by pasting one line into C
 
 本地已 clone 本仓库的多环境用户：直接 `bun run link:skills`，把 codex / claude / pi(~/.agents/skills) / antigravity(~/.gemini/config/skills) 的安装目录换成指向仓库的文件级软链（mining-factors 强制接入，其余 forge 技能仅在已装时转换），仓库从此是唯一来源；仓库改动即时对所有 harness 生效，不认软链的环境用 `bun run link:skills -- --copy` 降级为同步副本。
 
-Codex 全局提示词只在 `agents/codex-AGENTS.md` 维护。`bun run link:skills` 会把 `/mnt/c/Users/admin/.codex/AGENTS.md`（Codex App）软链到这个文件，并把内容写进 `~/.codex/config.toml` 顶部的 `developer_instructions`。Multica 给每个任务新建 codex-home 时只复制 `config.toml`，不复制 `AGENTS.md`，所以 WSL 这边只能走 `config.toml`。改完 `codex-AGENTS.md` 要重新跑一次 `bun run link:skills`。
+Codex 全局提示词只在 `agents/AGENTS.md` 维护。`bun run link:skills` 会把 `/mnt/c/Users/admin/.codex/AGENTS.md`（Codex App）软链到这个文件，并把内容写进 `~/.codex/config.toml` 顶部的 `developer_instructions`。Multica 给每个任务新建 codex-home 时只复制 `config.toml`，不复制 `AGENTS.md`，所以 WSL 这边只能走 `config.toml`。改完 `agents/AGENTS.md` 要重新跑一次 `bun run link:skills`。
+
+给别人用的通用版本：Python 项目用 `agents/share/AGENTS.md`，TypeScript 项目用 `agents/share-ts/AGENTS.md`，直接复制到对方的 `~/.codex/AGENTS.md` 或项目根目录。
 
 Copy any line below into your Claude Code conversation. Claude will fetch the instructions and install the skill automatically.
 
