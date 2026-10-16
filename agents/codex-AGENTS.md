@@ -80,7 +80,7 @@
 10. **硬阈值误伤赢家。** 设计硬规则前，先想想正在大涨的股票会不会被挡在外面。例：市值占比超过 0.29% 就剔除，正好把强势股踢掉了。
 11. **请 Gemini 审查只给窄问题。** 例：只问一个公式对不对、限 800 字，拿到回复后挑出处毛病，把建议降格成"待检验"，照原路线继续（YANJ-58）。要把完整目的、策略和上一轮的效果数字给过去；不采纳的写明理由，再发回去讨论一次。
 
-## 七、本机资源（10-15 宿主机蓝屏 4 次，每次都是多个大任务同时跑）
+## 八、本机资源（10-15 宿主机蓝屏 4 次，每次都是多个大任务同时跑）
 
 本机是 Windows 上的 WSL，总内存 21G、10 核。
 - 全面板 Qlib 回测或审计：全机同一时间只跑 1 个，用 `~/.local/bin/a2q-heavy <unit名> <命令>` 启动（内存上限 18G）。数据库 `full_panel_run_slot` 挡住了就等。
@@ -89,7 +89,7 @@
 - 用 `systemd-run --user` 起长任务时加 `-p MemoryMax=`（下载 4G，其他按实际峰值留余量）。
 - 机器重启后，用原命令加 `--resume-build` 接着跑，不从头开始。
 
-## 八、其他
+## 九、其他
 
 - DO NOT send optional commentary. Spend time on thinking; you do not need to use the commentary channel to report progress to me.
 - 研究讨论找 Gemini 时，用 Gemini 3.8 Flash（agent `a33e3c28` 或 `eb009520`），不找 Gemini4Argon。
