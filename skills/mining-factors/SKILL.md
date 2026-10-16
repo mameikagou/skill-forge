@@ -77,7 +77,7 @@ description: 量化研究的施工与审查手册（挖因子、改进现行策�
 
 ## 六、实现和算账
 
-- **美股因子、一票否决、看跌排序、退出规则**：只在 `us/stocks/candidates.py` 写一个纯函数（登记 `kind`：`score`、`veto`、`short`、`exit`），用 `research run-spec` 调 `us/stocks/evaluate.py` 评测（信息、头部名单、Qlib 账户三关，一张成绩单）。IC 在全部流动性合格股票（`liquid_pool`）里算，不在最后的合格池里算；看跌因子用 `short_pool`；每个持有期同时报期末涨跌和期间最大反向波动。板块和指数提醒用 `us/regime/`，不算横截面 IC。不自己写读宽表、切窗口、算 IC、调 Qlib、比名单的代码。评测器缺功能，找协调者改评测器，不另写一份。详见仓库 `planning/architecture/美股系统架构-精简版-2026-10-16.md` 第五节。
+- **美股因子、一票否决、看跌排序、退出规则**：只在 `us/stocks/candidates.py` 写一个纯函数（登记 `kind`：`score`、`veto`、`short`、`exit`），用 `research run-spec` 调 `us/stocks/evaluate.py` 评测（信息、头部名单、Qlib 账户三关，一张成绩单）。IC 在全部流动性合格股票（`liquid_pool`）和现行合格池（`long_pool`）里各报一份；`score` 加进排名时按训练期权重、独立家族等权、只用极端 5% 三种方式并排比；看跌因子用 `short_pool`；每个持有期同时报期末涨跌和期间最大反向波动（中位数和最差 10%）。板块和指数提醒用 `us/regime/`，不算横截面 IC。不自己写读宽表、切窗口、算 IC、调 Qlib、比名单的代码。评测器缺功能，找协调者改评测器，不另写一份。详见仓库 `planning/architecture/美股系统架构-精简版-2026-10-16.md` 第五节。
 - 用仓库现有的数据湖、宽表、研究入口和 Qlib 账户接口实现，不新建 CLI、数据库、回测器、账户、结果目录。
 - 成交、持仓、现金、费用、收益全部交给 Qlib（A 股、美股）。不自己写净值或成交函数。
 - 下一开盘成交时，开盘价缺失就记为没成交，不偷偷改用收盘价。
