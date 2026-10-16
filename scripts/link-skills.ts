@@ -150,6 +150,18 @@ for (const harnessDir of HARNESS_DIRS) {
   }
 }
 
+/** Codex 全局提示词：仓库 agents/codex-AGENTS.md 是唯一来源，WSL 和 Windows 两个 CODEX_HOME 都指向它 */
+const CODEX_AGENTS_SRC = join(ROOT, "agents/codex-AGENTS.md");
+const CODEX_HOMES = [join(homedir(), ".codex"), "/mnt/c/Users/admin/.codex"];
+
+for (const codexHome of CODEX_HOMES) {
+  if (!existsSync(codexHome)) continue;
+  const dst = join(codexHome, "AGENTS.md");
+  const result = placeFile(CODEX_AGENTS_SRC, dst);
+  console.log(`${homedirRelative(dst)}: ${result === "unchanged" ? "up to date" : "linked"}`);
+  if (result !== "unchanged") totalChanged++;
+}
+
 function homedirRelative(p: string): string {
   return p.replace(homedir() + "/", "~/");
 }

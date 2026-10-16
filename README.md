@@ -6,6 +6,8 @@ A collection of Claude Code skills. Install any skill by pasting one line into C
 
 本地已 clone 本仓库的多环境用户：直接 `bun run link:skills`，把 codex / claude / pi(~/.agents/skills) / antigravity(~/.gemini/config/skills) 的安装目录换成指向仓库的文件级软链（mining-factors 强制接入，其余 forge 技能仅在已装时转换），仓库从此是唯一来源；仓库改动即时对所有 harness 生效，不认软链的环境用 `bun run link:skills -- --copy` 降级为同步副本。
 
+Codex 全局提示词只在 `agents/codex-AGENTS.md` 维护。`bun run link:skills` 会把 `~/.codex/AGENTS.md` 和 `/mnt/c/Users/admin/.codex/AGENTS.md` 软链到这个文件。
+
 Copy any line below into your Claude Code conversation. Claude will fetch the instructions and install the skill automatically.
 
 ### antigravity-chat-read
