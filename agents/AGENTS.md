@@ -47,7 +47,9 @@
 - 出错怎么处理，分两种情况：
   - 算账、成交、回测、数据入湖、数据发布：出错就当场报错停下。不编价格，不把缺的值填成 0，不捕获异常后假装成功。
   - 每日出卡、盘前快报、盘中提醒：某个次要来源失败（一个新闻源超时、VIX 没取到、一只股票缺价），把这一项标成缺失，卡照常发，在「查看来源」里写明缺了什么。不能因为一个字段对不上整张卡不发。
-- 不加没必要的校验。默认不用哈希和指纹，不写"和冻结值不一致就报错"。只有三处可以用哈希：数据湖对象完整性检查、核对外部原始文件、下单和推送的防重复键。
+- **严禁哈希（用户 10-20 气炸了定的，矫枉过正）。** 任何地方、任何情况都不准新写哈希：`hashlib`、`hexdigest`、`sha256`、`md5`、`blake2`、`xxhash`、`zlib.crc32`、对 DataFrame/文件/配置/源码算指纹，全部禁止。真觉得非用不可，先停下来单独向用户申请，批准后由用户加进仓库的哈希白名单，自己不准往白名单里加东西。仓库里的哈希监控测试报警，就删掉哈希，不准改测试或白名单绕过去。
+- **严禁"错一点就整个作废"。** 缓存、状态、名单、配置，不准拿一组版本号、一段 JSON、一个指纹整体比对，对不上就整份作废、重建或报错。只比真正要用的那一两个字段；缺什么补什么（缺列补列、缺日期补日期、缺股票补股票）；已收盘年份的缓存只认手写的公式版本号。数据湖每天都在更新，任何把"数据版本变了"当成"历史数据全变了"的写法都是错的。
+- 不写"和冻结值不一致就报错"，不写"核查表某格为 0 就中断"。核查只出表、不拦截，异常写进报告让人看。
 - 测试要真：不用 mock、假数据去绕过真实逻辑，不写只为了让测试变绿的特殊分支。
 
 ## 五、操作
@@ -99,5 +101,7 @@
 - When the user explicitly asks to update, restart, replace, or recover Codex App or its bundled runtime, use the global `$codex-app-safe-update` skill and follow its backup, reconnection, verification, and rollback workflow.
 
 ## Incident history
+
+On 2026-10-20, the user blew up over hashing for the third time. 美股宽表年缓存（`us/panel.py` 的 `_cache_matches`）把 26 个数据湖版本号写成一段 JSON 整体比对，数据湖每天发新版本，2015–2026 十年的缓存天天作废；对不上时还只按本次查询的日期窗口重算并覆盖整年文件，2025 年的缓存被一次 3 个月的小样本截成了 1～3 月。读一年数据要 25 分钟以上，三层策略每修一个小 bug 都要再等半小时，一整天没出一个回测数。同一天，`us/layers/evaluate.py` 的开跑核查还写成"任何一格为 0 就抛异常退出"。用户 10-07、10-12、10-13 已经三次明确说过不要哈希、不要错一点就对不上。这次之后的规则见第四节"严禁哈希""严禁错一点就整个作废"两条。
 
 On 2026-08-24 at approximately 18:35 CST, Codex App appeared to hang because its WSL backend was killed during a system-wide out-of-memory cascade. Multiple concurrent Qlib/Python backtest workers running from a tmux scope exhausted the WSL allocation of 24 GB RAM and all 16 GB of swap. The kernel OOM killer first terminated small infrastructure processes including `ssh-agent` and `dbus-daemon`, then killed a Codex backend process and the user `systemd` manager; WSL init subsequently timed out and the distribution entered repeated restarts until the WSL environment was fully recreated. The initiating cause was the concurrent backtest workload, not an intrinsic Codex App failure and not the SSH connection. BotMux was the possible launch path for the workload, but the BotMux daemon itself was not the primary memory consumer.
