@@ -21,27 +21,6 @@ description: 量化研究的施工与审查手册（挖因子、改进现行策�
 
 本手册不规定试几次、几个窗口、固定统计阈值。这些归 goal 和用户合同。
 
-### 查数：先 a2q，查不到再读湖，不要猜接口
-
-- 行情、期权、排名、持仓、卡片先用 `a2q`（`a2q --help` 看全部块）。一段历史用 `a2q SOXL --price --start 2020-01-01 [--date 结束日] --json`，`--options` 同理（PR #548 部署后可用；之前 `--days` 最多 60）；看输出里的 `data_as_of` / `session_date` 确认数据到哪天。
-- a2q 没有的字段或数据集，脚本只用下面两个入口，**不要试别的模块名**（`lake.api`、`Lake`、`LakeClient`、`LakeStore`、`DatasetStore`、`read_dataset` 都不存在）：
-
-```python
-from analyze2quant.us.panel import symbol_rows            # 按股票取行，最常用
-rows = symbol_rows("us_equity.etf_daily_1d", ["SOXL"],
-                   ["symbol", "session_date", "open", "high", "low", "close", "known_at"],
-                   date_column="session_date", since="2020-01-01")   # 返回 DataFrame
-
-from analyze2quant.lake.reader import current_dataset     # 整个数据集
-dataset = current_dataset("us_equity.uw_iv_rank")
-for table in dataset.iter_tables(columns=[...]):          # 逐文件 pyarrow.Table，别一次全转 pandas
-    ...
-```
-
-- 常用数据集：个股日线 `us_equity.daily_1d_consolidated`，ETF/指数日线 `us_equity.etf_daily_1d`（价格是未复权的，复权用 `provider_adj_close / close`），期权日指标 `us_equity.schwab_option_metrics_1d`，期权链 `us_equity.schwab_option_chains`（10-12 起），分钟线 `us_equity.schwab_minute_1m`（10-08 起），IV 排名 `us_equity.uw_iv_rank`，财报日历 `us_equity.nasdaq_earnings_calendar`。全部名字：`ls /srv/qrant-data/datasets/us_equity/`（目录名前加 `us_equity.`）。
-- 运行环境：在基于最新 main 的 worktree 里 `uv run --frozen python`；只是临时查一下，可直接用 a2q 背后的生产环境 `$(dirname $(readlink -f ~/.local/bin/a2q))/python`（只读）。本地旧 checkout 可能没有 `symbol_rows`。系统 `python3` 没有 pandas。
-- 可见时点按 `known_at`（或数据集自带的来源时钟）判，不按 `session_date`。盘中现价湖里没有，用 `longbridge quote SOXL.US`、`longbridge kline SOXL.US --period day --count 5 --format json`。
-
 ## 二、改进加在现行策略上，和现行策略比
 
 **先分清是哪种活。** 本节只管"用户要改进某个现行策略"。用户说要**新策略**（"新的波段策略""基于 X 写新策略""挖新的时序因子"），就是另起一条线：借 X 的数据和思路，不改 X 的代码，不绑 X 的名单和现行拿法，也不拿 X 当对照；和标的自身买入持有、市场基准比（用户 11-02："屎山谁动谁炸……你不能基于它写新策略么"）。拿不准是哪种，先问。
