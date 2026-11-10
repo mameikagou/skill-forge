@@ -31,9 +31,6 @@ const HARNESS_DIRS = [
   join(homedir(), ".gemini/config/skills"), // Antigravity CLI
 ];
 
-/** 强制安装到所有 harness 的技能 */
-const ALWAYS_INSTALL = ["mining-factors", "a2q"];
-
 /** 安装产物与包文件，不镜像进 harness */
 const EXCLUDE = new Set(["ai-install.md", "install.sh", "package.json"]);
 
@@ -123,13 +120,11 @@ const skillNames = readdirSync(SKILLS_DIR, { withFileTypes: true })
   .map((e) => e.name);
 
 for (const harnessDir of HARNESS_DIRS) {
-  if (!existsSync(harnessDir) && !ALWAYS_INSTALL.length) continue;
+  if (!existsSync(harnessDir)) continue;
   for (const name of skillNames) {
     const srcSkill = join(SKILLS_DIR, name);
     const dstSkill = join(harnessDir, name);
-    const force = ALWAYS_INSTALL.includes(name);
-    const alreadyThere = existsSync(dstSkill);
-    if (!force && !alreadyThere) continue; // 只转换该环境已装的 forge 技能
+    if (!existsSync(dstSkill)) continue; // 只转换该环境已装的 forge 技能
 
     // 若整个目录此前是指向仓库的目录级软链，先拆掉换成真实目录
     if (isLink(dstSkill)) rmSync(dstSkill, { force: true });
