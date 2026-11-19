@@ -180,7 +180,7 @@ MRVL 的实际记录证明：日线后来方向有利，仍可能在此前先止
 
 ## a2q 查不到时
 
-先 `a2q --help` 确认真没有这个块或字段。确实没有，按下面做，**做完在「缺口登记」加一行**（直接改 `/home/admin/mrlonely-code/skill-forge/skills/a2q/SKILL.md`，这是唯一底稿），后续统一开发进 a2q。
+先 `a2q --help` 确认真没有这个块或字段。确实没有，按下面做，**做完在 analyze2quant 仓库的 `planning/reports/a2q-缺口登记.md` 加一行**，后续统一开发进 a2q。
 
 脚本读数据湖只用这两个入口，不要试别的名字（`lake.api`、`Lake`、`LakeClient`、`LakeStore`、`DatasetStore`、`read_dataset` 都不存在）：
 
@@ -199,21 +199,6 @@ for table in current_dataset("us_equity.uw_iv_rank").iter_tables(columns=[...]):
 - 常用数据集：个股日线 `us_equity.daily_1d_consolidated`；ETF/指数日线 `us_equity.etf_daily_1d`（未复权，复权乘 `provider_adj_close / close`）；期权日指标 `us_equity.schwab_option_metrics_1d`；期权链 `us_equity.schwab_option_chains`（10-12 起）；分钟线 `us_equity.schwab_minute_1m`（10-08 起）；IV 排名 `us_equity.uw_iv_rank`；财报日历 `us_equity.nasdaq_earnings_calendar`。全部名字：`ls /srv/qrant-data/datasets/us_equity/`，前面加 `us_equity.`。
 - 可见时点看 `known_at` 或数据集自带的来源时钟，不看 `session_date`。
 - 盘中现价湖里没有：`longbridge quote SOXL.US`；日 K `longbridge kline SOXL.US --period day --count 5 --format json`。
-
-## 缺口登记
-
-a2q 查不到、只能自己写脚本或联网的需求，在这里追加一行（日期｜谁｜想查什么｜a2q 缺什么｜临时怎么查的）。协调者定期把它们派成开发任务，做完的划掉并写上 PR 号。
-
-- 2026-11-05｜gemini-4-argon 会话｜SOXL 2020 年以来盘中最低跌超 20% 的日子及之后走势｜`--price` 只能看最近 60 天、没有开高低、没有 MA200｜~~写脚本读 etf_daily_1d~~ → 已由 PR #548 解决（区间、开高低、MA200），2026-11-06 部署
-- 2026-11-05｜同上｜MA120、MA250 等任意窗口均线｜`--price` 只有 MA20/50/200｜脚本自算
-- 2026-11-05｜同上｜盘中实时价｜a2q 不联网，只到上一收盘｜币安、longbridge
-- 2026-11-12｜协调者（决策盘点，同日按审查更正）｜嘉信近期的 ETF 成交｜ETF 在几处被挡：`migrations/0039_trade_journal.sql` 的嘉信部分只投影 assetType=EQUITY，`providers/schwab_accounts.py` 的 `position_reference` 遇非 EQUITY 返回空，`commands/query.py:1186`、`1211`、`1231` 只算 equity。段①盘点据此误判「这笔不在嘉信」；原始记录在不在 `research.forward_observations` 未复核。`--actions` 共用这份净数量，ETF 不该进 stocks 持仓规则｜直接查 `research.forward_observations`；决策因子化线在修
-- 2026-11-12｜同上（更正）｜币安合约成交和持仓｜成交在 `journal_trades` / `journal_rounds` 里（手工记账和导入），但 `--portfolio` 在 `commands/query.py:1231` 跳过非 equity，也没有币安账户块（权益、保证金、费后盈亏）｜直接查 `journal_rounds`；决策因子化线在修
-- 2026-11-12｜同上｜多头候选和持仓的 ATR、跳空 / ATR｜ATR 只在空头两族榜里有（`_short_family_display`），`--price` 没有｜longbridge kline 加 python 现算，存 /tmp，两天后被系统清掉
-- 2026-11-12｜同上（更正）｜盘中开盘至今涨跌、VWAP、相对 QQQ / SOXL｜读取代码已有（`providers/schwab_minutes.py:333` `minute_frame`，短空线在用），a2q 没有分钟块。覆盖：每天都有的只有研究池 20 只（`schwab_minutes.py:38`），其余随短空榜，10-28 后每天 26–45 只。开盘至今、相对 QQQ / SOXL 用同一时刻的现价和今开就能算，分钟线只有 VWAP、翻红先后这类路径量才必需｜longbridge 现取
-- 2026-11-12｜同上｜GEX、skew｜湖里 `schwab_option_metrics_1d` 有（嘉信期权 10-12 起），a2q 不输出。期权 Gamma 复现（YANJ-490）只否定了「T−2 Gamma 符号、按跳空方向开盘进、固定退出」两条规则，输出时写清检验过的范围，不写「已证伪」｜读湖
-- 2026-11-12｜同上（部分未复核）｜iv30 一年分位；新闻重要度｜`--options` 的 `iv30_rank_1y` 为空（未复核）；盘前新闻 1,526 行里 1,508 行 importance 为 0（ZCode 查库），`us/news/premarket.py` 有赋非零值的路径，为什么大多是 0 未查｜AI 读标题自己判断
-- 2026-11-18｜协调者（用户交易复盘）｜①几只票盘中走势有多同步（5 分钟收益相关）；②某天是单边还是来回震荡（日内效率 = 开到收的净变动 ÷ 5 分钟变动绝对值之和）；③把 brain `交易流水-2026.csv` 的每个回合对到当天分钟线（开仓前后走势、持有中最大浮盈浮亏）｜`--decision-context` 只给单个时点的快照，没有多票相关、日型和成交回合对照；`--portfolio` 不读 brain 流水 CSV｜`minute_frame` 加 pandas 现算
 
 ```
 
