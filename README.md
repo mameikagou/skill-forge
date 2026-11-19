@@ -52,22 +52,6 @@ Turns real project notes into strong, interview-ready technical chains, resume b
 Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/suization/ai-install.md and follow the instructions inside.
 ```
 
-### mining-factors
-
-Build-and-review handbook for quantitative research: improve the live strategy one layer at a time and compare against it, protect weak factors, rolling 4:1 validation, approved-engine accounting, and evidence-based review of ideas and campaigns (absorbed the former sanity skill). Keeps a source-backed chapter synthesis of the original factor-investing book.
-
-```
-Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/mining-factors/ai-install.md and follow the instructions inside.
-```
-
-### mainline-drift-audit
-
-Audits plans and implementations for parallel systems, duplicated truth, directory-scanned state, unbounded artifacts, and database or data-lake bypasses.
-
-```
-Fetch https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/mainline-drift-audit/ai-install.md and follow the instructions inside.
-```
-
 ### sandbox-dev-environment
 
 Uses the BotMux development environment correctly, distinguishing native owner sessions from Podman guests and covering the data lake, staging/publish flow, approved books, review skills, and network diagnostics.
@@ -125,16 +109,14 @@ Fetch the following URLs one by one and follow the instructions inside each:
 1. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/suization/ai-install.md
 2. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/write-skill/ai-install.md
 3. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/skill-auto-installer/ai-install.md
-4. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/mainline-drift-audit/ai-install.md
-5. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/sandbox-dev-environment/ai-install.md
-6. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/dsh-worker-review/ai-install.md
-7. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/delegate-luna-worker/ai-install.md
-8. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/mining-factors/ai-install.md
-9. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/quant-ui-sync/ai-install.md
-10. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/clash-party-safe-update/ai-install.md
-11. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-openmemory/ai-install.md
-12. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-longmemory/ai-install.md
-13. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/antigravity-chat-read/ai-install.md
+4. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/sandbox-dev-environment/ai-install.md
+5. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/dsh-worker-review/ai-install.md
+6. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/delegate-luna-worker/ai-install.md
+7. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/quant-ui-sync/ai-install.md
+8. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/clash-party-safe-update/ai-install.md
+9. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-openmemory/ai-install.md
+10. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/route-longmemory/ai-install.md
+11. https://raw.githubusercontent.com/mameikagou/skill-forge/main/skills/antigravity-chat-read/ai-install.md
 ```
 
 ## Uninstall
