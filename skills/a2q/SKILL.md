@@ -41,7 +41,7 @@ a2q ZS --insider --short --options --transcript --news --days 10 --json
 
 不写块名会返回全部个股块。一次可以查多只代码；`--days` 控制日线和期权的交易日数，范围 1–60。给 agent 使用 `--json`，给人浏览时省略它。
 
-查一段历史用区间：`a2q SOXL --price --start 2020-01-01 --date 2020-03-20 --json`，`--options` 同理；给了 `--start` 就不受 60 天限制，`--price` 带复权开高低收、MA20/50/200。其他块不支持 `--start`，会直接报错。
+查一段历史用区间：`a2q SOXL --price --start 2020-01-01 --date 2020-03-20 --json`，`--options` 同理；给了 `--start` 就不受 60 天限制，`--price` 带复权开高低收、MA20/50/120/200/250。其他块不支持 `--start`，会直接报错。
 
 ## 查全局
 
