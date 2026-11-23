@@ -142,6 +142,28 @@ a2q MRVL --similar --state asset_change_pct=-3.2 --state qqq_change_pct=-1 --jso
 
 详细数据与覆盖限制见 analyze2quant 仓库 `planning/reports/实盘冲动复盘.md`。聊天回复用“历史样本与基准 → 当前计划 → 未确认项”的顺序，避免用盈利故事催下单。
 
+## 币安美股合约开单算账卡
+
+用户在币安交易美股永续合约（逐仓，可多可空），开单前用 `--brief` 出一屏卡。币安行情由调用方用公开接口抓好后喂进来，`a2q` 本身不联网：
+
+```bash
+B=https://fapi.binance.com/fapi/v1
+a2q CRWV --decision-context --brief --direction long \
+  --stop-price 47 --target-price 56 --risk-usd 40 --account-usd 1000 \
+  --leverage 5 --maint-margin-rate 0.01 --funding-periods 3 \
+  --binance-quote <(curl -s "$B/premiumIndex?symbol=CRWVUSDT") \
+  --binance-quote <(curl -s "$B/ticker/24hr?symbol=CRWVUSDT") \
+  --binance-quote <(curl -s "$B/fundingInfo")
+```
+
+- 只允许单标的。`--risk-usd` 必须配 `--stop-price`。入场价依次取 `--entry-price`、币安最新价、美股决策价，卡上会注明来源。
+- 卡上给出：张数（按合约步长向下取整）、名义、保证金、止损亏损、费滑占风险、保本价、净 R、强平价、资金费、基差、大盘 15/30/60 分钟走势。全部是连续量，没有买卖开关。止损落在强平价之外时只陈述事实。
+- 强平价只在同时给了 `--leverage` 和 `--maint-margin-rate` 时计算。维持保证金率由用户在币安档位表里查好后传入，不要编。卡上另给一个零维持保证金外边界：真实强平价一定在它和入场价之间。
+- 手续费默认 5bps、滑点默认 2bps，都没有校准过，用户知道自己的真实费率时用 `--fee-bps`、`--slippage-bps` 覆盖。资金费按最近一期费率外推，费率每期都会变。
+- 每个量都标了数据时间。币安 7×24 交易，美股会休市，湖里的日线也可能落后（ATR 一行标的是日线入库时间）。读卡时先看时间，再看数值。
+- 大盘短周期需要喂 `--kline QQQ=...` 的分钟线，否则写进缺项。`curl` 偶尔返回空内容，报 `Expecting value` 时重抓一次。
+- 回放历史时点时加 `--at`，晚于该时点的币安数据会被拒绝。去掉 `--brief`、加 `--json` 可以拿到全部字段（`risk_plan`、`venue`、`intraday_context`）。
+
 ## a2q 查不到时
 
 先 `a2q --help` 确认真没有这个块或字段。确实没有，按下面做，**做完在 analyze2quant 仓库的 `planning/reports/a2q-缺口登记.md` 加一行**，后续统一开发进 a2q。
