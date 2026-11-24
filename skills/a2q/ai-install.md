@@ -174,6 +174,48 @@ a2q MRVL --similar --state asset_change_pct=-3.2 --state qqq_change_pct=-1 --jso
 
 详细数据与覆盖限制见 analyze2quant 仓库 `planning/reports/实盘冲动复盘.md`。聊天回复用“历史样本与基准 → 当前计划 → 未确认项”的顺序，避免用盈利故事催下单。
 
+## 币安美股合约开单算账卡
+
+用户在币安交易美股永续合约（逐仓，可多可空），开单前用 `--brief` 出一屏卡。币安行情由调用方用公开接口抓好后喂进来，`a2q` 本身不联网：
+
+```bash
+B=https://fapi.binance.com/fapi/v1
+a2q CRWV --decision-context --brief --direction long \
+  --stop-price 47 --target-price 56 --risk-usd 40 --account-usd 1000 \
+  --leverage 5 --maint-margin-rate 0.01 --funding-periods 3 \
+  --binance-quote <(curl -s "$B/premiumIndex?symbol=CRWVUSDT") \
+  --binance-quote <(curl -s "$B/ticker/24hr?symbol=CRWVUSDT") \
+  --binance-quote <(curl -s "$B/fundingInfo")
+```
+
+- 只允许单标的。`--risk-usd` 必须配 `--stop-price`。入场价依次取 `--entry-price`、币安最新价、美股决策价，卡上会注明来源。
+- 卡上给出：张数（按合约步长向下取整）、名义、保证金、止损亏损、费滑占风险、保本价、净 R、强平价、资金费、基差、大盘 15/30/60 分钟走势。全部是连续量，没有买卖开关。止损落在强平价之外时只陈述事实。
+- 强平价只在同时给了 `--leverage` 和 `--maint-margin-rate` 时计算。维持保证金率由用户在币安档位表里查好后传入，不要编。卡上另给一个零维持保证金外边界：真实强平价一定在它和入场价之间。
+- 手续费默认 5bps、滑点默认 2bps，都没有校准过，用户知道自己的真实费率时用 `--fee-bps`、`--slippage-bps` 覆盖。资金费按最近一期费率外推，费率每期都会变。
+- 每个量都标了数据时间。币安 7×24 交易，美股会休市，湖里的日线也可能落后（ATR 一行标的是日线入库时间）。读卡时先看时间，再看数值。
+- 大盘短周期需要喂 `--kline QQQ=...` 的分钟线，否则写进缺项。`curl` 偶尔返回空内容，报 `Expecting value` 时重抓一次。
+- 回放历史时点时加 `--at`，晚于该时点的币安数据会被拒绝。去掉 `--brief`、加 `--json` 可以拿到全部字段（`risk_plan`、`venue`、`intraday_context`）。
+
+## 币安美股合约雷达
+
+开盘前或盘中先看一屏：大盘温度、币安 186 只美股合约里正股的强弱排序、杠杆和反向 ETF 跟 QQQ 的关系、短空研究榜。不传代码：
+
+```bash
+B=https://fapi.binance.com/fapi/v1
+for e in ticker/24hr premiumIndex fundingInfo; do curl -s -o "/srv/qrant-runs/tmp/bn_${e//\//_}.json" "$B/$e"; done
+a2q --binance-board --board-sort relative_trend21 --board-limit 15 \
+  --binance-quote /srv/qrant-runs/tmp/bn_ticker_24hr.json \
+  --binance-quote /srv/qrant-runs/tmp/bn_premiumIndex.json \
+  --binance-quote /srv/qrant-runs/tmp/bn_fundingInfo.json
+```
+
+- 三份全量接口文件都是可选的；不给就只出湖内日线的量。全量接口要先存成文件（几百 KB，管道偶尔写断），用完删掉。不能和 `--decision-context` 同用；`--date` 回看历史时不能带币安报价。
+- 排序键可选 `relative_trend21`（默认，21 日收益减 QQQ）、`trend21`、`momentum12_1`、`ma20_ratio`、`high252_ratio`、`dollar_volume20`。默认排序只决定显示顺序，没校准过，不是总分。正股列出前 N 和后 5，并给出在 147 只正股里的百分位。
+- ETF 单独一张表，按对 QQQ 的 60 日 beta 从高到低排，beta 本身就显出方向和倍数（TQQQ 约 +3、SQQQ 约 −3）。
+- 上市不足 252 日的票，离高点和 12-1 动量为空，标「历史不足 252 日」；湖里没有日线的合约列在卡尾。
+- 卡尾会列出币安指数价与美股收盘偏离超过 50% 的合约：合约清单按代码同名匹配，单位或标的可能对不上（11-24 实测 STXXUSDT、SNDKUSDT），用这些票前先到币安核对标的。
+- 美股日线、大盘、空头榜、VIX、合约清单、币安报价各有各的时间，卡尾一行全列出来。嘉信认证过期时湖里的日线会停在旧日期，「币安相对美股收盘」就是跨了好几天的涨跌。
+
 ## a2q 查不到时
 
 先 `a2q --help` 确认真没有这个块或字段。确实没有，按下面做，**做完在 analyze2quant 仓库的 `planning/reports/a2q-缺口登记.md` 加一行**，后续统一开发进 a2q。
