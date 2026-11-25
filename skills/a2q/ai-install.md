@@ -195,6 +195,7 @@ a2q CRWV --decision-context --brief --direction long \
 - 每个量都标了数据时间。币安 7×24 交易，美股会休市，湖里的日线也可能落后（ATR 一行标的是日线入库时间）。读卡时先看时间，再看数值。
 - 大盘短周期需要喂 `--kline QQQ=...` 的分钟线，否则写进缺项。`curl` 偶尔返回空内容，报 `Expecting value` 时重抓一次。
 - 回放历史时点时加 `--at`，晚于该时点的币安数据会被拒绝。去掉 `--brief`、加 `--json` 可以拿到全部字段（`risk_plan`、`venue`、`intraday_context`）。
+- 盘中开单前，再喂一份长桥一分钟线 `--kline TSLA=<(longbridge kline TSLA.US --period 1m --count 400 --format json)`，QQQ 也照样喂一份（`--kline QQQ=…`）。卡上会多出这些量：距成交均价 VWAP（有 turnover 时按成交额/成交量算）、距日高日低和前 15 分钟高低（单位都是 ATR）、对 QQQ 的 5 分钟 Beta（会注明用了几对）、当日 5 分钟量比，以及一行「关键位」：昨高、昨低、昨收、5 日高低、MA20、MA50，按离现价远近排序。「事件/期权」一行列出 IV30、UW IV、偏度、净 GEX，带各自的历史分位。期权观测常常落后好几天，先看每项后面标的时间。
 - 想用真实盘口估滑点，就多喂一份盘口文件 `--binance-depth <(curl -s "$B/depth?symbol=CRWVUSDT&limit=20")`。这时入场滑点按同侧逐档吃单估算，止损离场按对侧估算，再用估出的滑点重算张数。不能和 `--slippage-bps` 同时给。前 20 档吃不满的那一侧会退回 2bps，`venue.slippage_basis` 里写明原因。卡上「盘口」一行列出价差、买卖前 3/5 档的美元深度和两侧滑点。离场滑点用的是下单这一刻的盘口，止损真被触发时盘口可能薄得多。美股夜盘时，币安卖方前几档常常只有几百美元。
 
 ## 币安美股合约雷达
